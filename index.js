@@ -3,6 +3,7 @@ const inquirer = require('inquirer');
 
 
 function init() {
+    // prompts user to choose an option
     inquirer
         .prompt([
             {
@@ -23,6 +24,7 @@ function init() {
         ])
         .then((choice) => {
             switch (choice.action) {
+                // checks which option is selected and calls the corresponding query
                 case 'View roles' :
                     query.viewRoles()
                     .then(([rows, fields]) => {
@@ -60,6 +62,7 @@ function init() {
                 break;
 
                 case 'Add role' :
+                    // If role requiring input is selected, creates prompts for inputs
                     inquirer
                         .prompt([
                             {
@@ -79,6 +82,7 @@ function init() {
                             },
                         ])
                         .then((data) => {
+                            // populates query params with prompt input data
                             query.newRole(data.title, data.salary, data.department)
                             .then(([rows, fields]) => {
                                 console.log('Role added.');
@@ -176,15 +180,16 @@ function init() {
                             });
                         });
                 break;
-
+                        // if user selects quit option, exits process
                 case 'Quit' :
                     process.exit(0);
                 
+                    // If action is invalid, log error
                 default:
                     console.log('Error');
                     init();
             }
         })
 }   
-
+// calls init function
 init();
