@@ -2,6 +2,7 @@ const query = require('./queries/queries');
 const inquirer = require('inquirer');
 
 
+
 function init() {
     // prompts user to choose an option
     inquirer
@@ -51,7 +52,7 @@ function init() {
 
                 case 'View employees' :
                     query.viewEmployees()
-                    .then((rows, fields) => {
+                    .then(([rows, fields]) => {
                         console.table(rows);
                         init();
                     })
